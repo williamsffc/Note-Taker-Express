@@ -1,22 +1,33 @@
 var notesArray = require("../db/db.json");
-
-
+var fs = require("fs");
 
 module.exports = function (app) {
 
-    app.get("/api/notes", function (req, res) {
+    app.get("/api/notes", (req, res) => {
         res.json(notesArray);
 
     });
 
-    //POST /api/notes - Should receive a new note to save on the request body, add it to the db.json file, and then return the new note to the client.
+    app.post("/api/notes", (req, res) => {
 
-    app.post("/api/notes", function (req, res) {
         var saveNote = req.body;
-        
-        characters.push(saveNote);
-        console.log(notesArray);
+
+        notesArray.push(saveNote);
+
+        writeToFile("../develop/db/db.json", JSON.stringify(notesArray));
+
         res.json(notesArray);
+
+        function writeToFile(fileName, data) {
+            fs.writeFile(fileName, data, err => {
+                if (err) {
+                    console.log("Noted was not saved!");
+                }
+                console.log("Saved");
+            });
+        }
     });
+
+    
 
 };
