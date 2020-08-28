@@ -1,10 +1,10 @@
-var notesArray = require("../db/db.json");
+var activeNote = require("../db/db.json");
 var fs = require("fs");
 
 module.exports = function (app) {
 
     app.get("/api/notes", (req, res) => {
-        res.json(notesArray);
+        res.json(activeNote);
 
     });
 
@@ -12,11 +12,11 @@ module.exports = function (app) {
 
         var saveNote = req.body;
 
-        notesArray.push(saveNote);
+        activeNote.push(saveNote);
 
-        writeToFile("../develop/db/db.json", JSON.stringify(notesArray));
+        writeToFile("../develop/db/db.json", JSON.stringify(activeNote));
 
-        res.json(notesArray);
+        res.json(activeNote);
 
         function writeToFile(fileName, data) {
             fs.writeFile(fileName, data, err => {
@@ -33,11 +33,11 @@ module.exports = function (app) {
 
         var chosen = req.params.id
         
-        notesArray.splice(chosen, 1);
+        activeNote.splice(chosen, 1);
 
-        res.json(notesArray);   
-
-        writeToFile("../develop/db/db.json", JSON.stringify(notesArray));
+        res.json(activeNote);   
+        // re-write
+        writeToFile("../develop/db/db.json", JSON.stringify(activeNote));
 
         function writeToFile(fileName, data) {
             fs.writeFile(fileName, data, err => {
