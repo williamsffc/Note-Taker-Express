@@ -1,10 +1,11 @@
-var activeNote = require("../db/db.json");
+var noteArray = require("../db/db.json");
 var fs = require("fs");
+var uuidv1 = require('uuidv1');
 
 module.exports = function (app) {
 
     app.get("/api/notes", (req, res) => {
-        res.json(activeNote);
+        res.json(noteArray);
 
     });
 
@@ -12,11 +13,14 @@ module.exports = function (app) {
 
         var saveNote = req.body;
 
-        activeNote.push(saveNote);
+        saveNote.id = uuidv1();
 
-        writeToFile("../develop/db/db.json", JSON.stringify(activeNote));
+        noteArray.push(saveNote);
+        console.log(noteArray);
 
-        res.json(activeNote);
+        writeToFile("../develop/db/db.json", JSON.stringify(noteArray));
+
+        res.json(noteArray);
 
         function writeToFile(fileName, data) {
             fs.writeFile(fileName, data, err => {
@@ -24,6 +28,7 @@ module.exports = function (app) {
                     console.log("Note was not saved!");
                 }
                 console.log("Saved");
+        
             });
         }
     });
@@ -32,12 +37,19 @@ module.exports = function (app) {
     app.delete("/api/notes/:id", (req, res) => {
 
         var chosen = req.params.id
-        
-        activeNote.splice(chosen, 1);
+        console.log(chosen);
 
-        res.json(activeNote);   
+        var filterArr = [];
+
+        for (let i = 0; i < noteArray.length; i++) {
+            if (noteArray[i].id !== chosen) {
+                filterArr.push(noteArray[i])
+            }
+        }
+
+        res.json(filterArr);   
         // re-write to array what's left of the notes
-        writeToFile("../develop/db/db.json", JSON.stringify(activeNote));
+        writeToFile("../develop/db/db.json", JSON.stringify(filterArr));
 
         function writeToFile(fileName, data) {
             fs.writeFile(fileName, data, err => {
