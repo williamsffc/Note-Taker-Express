@@ -42,10 +42,11 @@ module.exports = function (app) {
 
         res.json(filterArr);   
         // re-write to array what's left of the notes
+
         fs.writeFile("db/db.json", JSON.stringify(noteArray), (err) => {
             if (err) throw err;
             console.log("Saved")
         })
-        res.json(noteArray);
+        // res.json(noteArray);
     });
 };
