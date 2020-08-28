@@ -1,5 +1,6 @@
 var noteArray = require("../db/db.json");
 var fs = require("fs");
+const path = require("path")
 var uuidv1 = require('uuidv1');
 
 module.exports = function (app) {
@@ -17,20 +18,22 @@ module.exports = function (app) {
 
         noteArray.push(saveNote);
         console.log(noteArray);
-
-        writeToFile("../develop/db/db.json", JSON.stringify(noteArray));
+        fs.writeFile("db/db.json", JSON.stringify(noteArray), (err) => {
+            if (err) throw err;
+            console.log("Saved")
+        })
 
         res.json(noteArray);
 
-        function writeToFile(fileName, data) {
-            fs.writeFile(fileName, data, err => {
-                if (err) {
-                    console.log("Note was not saved!");
-                }
-                console.log("Saved");
+        // async function writeToFile(fileName, data) {
+        //     await fs.writeFile(fileName, data, err => {
+        //         if (err) {
+        //             console.log("Note was not saved!");
+        //         }
+        //         console.log("Saved");
         
-            });
-        }
+        //     });
+        // }
     });
 
     // DELETE / api / notes /: id - Should receive a query parameter containing the id of a note to delete.This means you'll need to find a way to give each note a unique id when it's saved.In order to delete a note, you'll need to read all notes from the db.json file, remove the note with the given id property, and then rewrite the notes to the db.json file.
@@ -49,7 +52,7 @@ module.exports = function (app) {
 
         res.json(filterArr);   
         // re-write to array what's left of the notes
-        writeToFile("../develop/db/db.json", JSON.stringify(filterArr));
+        writeToFile("db/db.json", JSON.stringify(filterArr));
 
         function writeToFile(fileName, data) {
             fs.writeFile(fileName, data, err => {
