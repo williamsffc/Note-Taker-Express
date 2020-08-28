@@ -36,11 +36,11 @@
 * [GitHub] - https://github.com/williamsffc
 
 ## **Screenshots:**
-<img src="Develop/public/assets/pictures/note1.JPG">
-<img src="Develop/public/assets/pictures/note2.JPG">
-<img src="Develop/public/assets/pictures/note3.JPG">
-<img src="Develop/public/assets/pictures/note4.JPG">
-<img src="Develop/public/assets/pictures/note5.JPG">
+<img src="public/assets/pictures/note1.JPG">
+<img src="public/assets/pictures/note2.JPG">
+<img src="public/assets/pictures/note3.JPG">
+<img src="public/assets/pictures/note4.JPG">
+<img src="public/assets/pictures/note5.JPG">
 
 -------------
 © Copyright - 2020
