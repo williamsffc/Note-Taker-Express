@@ -42,8 +42,6 @@ module.exports = function (app) {
 
         res.json(filterArr);   
         // re-write to array what's left of the notes
-        // writeToFile("db/db.json", JSON.stringify(filterArr));
-
         fs.writeFile("db/db.json", JSON.stringify(noteArray), (err) => {
             if (err) throw err;
             console.log("Saved")
