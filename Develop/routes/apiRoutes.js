@@ -36,7 +36,7 @@ module.exports = function (app) {
         activeNote.splice(chosen, 1);
 
         res.json(activeNote);   
-        // re-write
+        // re-write to array what's left of the notes
         writeToFile("../develop/db/db.json", JSON.stringify(activeNote));
 
         function writeToFile(fileName, data) {
