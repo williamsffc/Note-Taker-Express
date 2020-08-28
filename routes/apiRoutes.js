@@ -18,7 +18,7 @@ module.exports = function (app) {
 
         noteArray.push(saveNote);
         console.log(noteArray);
-        fs.writeFile("db/db.json", JSON.stringify(noteArray), (err) => {
+        fs.writeFile("../db/db.json", JSON.stringify(noteArray), (err) => {
             if (err) throw err;
             console.log("Saved")
         })
