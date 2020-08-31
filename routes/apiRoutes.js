@@ -37,16 +37,19 @@ module.exports = function (app) {
         for (let i = 0; i < noteArray.length; i++) {
             if (noteArray[i].id !== chosen) {
                 filterArr.push(noteArray[i]);
+
+                
             }
+            fs.writeFile("db/db.json", JSON.stringify(filterArr), (err) => {
+                if (err) throw err;
+                console.log("Saved")
+            })
         }
 
         res.json(filterArr);
 
         // re-write to array what's left of the notes
-        fs.writeFile("db/db.json", JSON.stringify(filterArr), (err) => {
-            if (err) throw err;
-            console.log("Saved")
-        })
+       
         
         // res.json(noteArray);
         ////////////////////////
