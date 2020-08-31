@@ -1,6 +1,6 @@
 var noteArray = require("../db/db.json");
 var fs = require("fs");
-const path = require("path")
+// const path = require("path");
 var uuidv1 = require('uuidv1');
 
 module.exports = function (app) {
@@ -28,7 +28,7 @@ module.exports = function (app) {
 
     app.delete("/api/notes/:id", (req, res) => {
 
-        var chosen = req.params.id
+        var chosen = req.params.id;
         console.log(chosen);
 
         var filterArr = [];
