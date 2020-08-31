@@ -18,7 +18,7 @@ module.exports = function (app) {
 
         noteArray.push(saveNote);
         console.log(noteArray);
-        
+
         fs.writeFile("db/db.json", JSON.stringify(noteArray), (err) => {
             if (err) throw err;
             console.log("Saved")
@@ -27,40 +27,41 @@ module.exports = function (app) {
     });
 
     // DELETE / api / notes /: id - Should receive a query parameter containing the id of a note to delete.This means you'll need to find a way to give each note a unique id when it's saved.In order to delete a note, you'll need to read all notes from the db.json file, remove the note with the given id property, and then rewrite the notes to the db.json file.
+    // app.delete("/api/notes/:id", (req, res) => {
+
+    //     var chosen = req.params.id
+    //     console.log(chosen);
+
+    //     var filterArr = [];
+
+    //     for (let i = 0; i < noteArray.length; i++) {
+    //         if (noteArray[i].id !== chosen) {
+    //             filterArr.push(noteArray[i])
+    //         }
+    //     }
+
+    //     res.json(filterArr);
+    //     // re-write to array what's left of the notes
+    //     fs.writeFile("db/db.json", JSON.stringify(filterArr), (err) => {
+    //         if (err) throw err;
+    //         console.log("Saved")
+    //     })
+    //     // res.json(noteArray);
+
+    // });
+
     app.delete("/api/notes/:id", (req, res) => {
-
-        var chosen = req.params.id
-        console.log(chosen);
-
-        var filterArr = [];
+        console.log(req.params.id);
 
         for (let i = 0; i < noteArray.length; i++) {
-            if (noteArray[i].id !== chosen) {
-                filterArr.push(noteArray[i]);
-
-                
+            if (noteArray[i].id === req.params.id) {
+                noteArray.splice(i, 1);
             }
-            fs.writeFile("db/db.json", JSON.stringify(filterArr), (err) => {
-                if (err) throw err;
-                console.log("Saved")
-            })
         }
-
-        res.json(filterArr);
-
-        // re-write to array what's left of the notes
-       
         
-        // res.json(noteArray);
-        ////////////////////////
-        // writeToFile("db/db.json", JSON.stringify(filterArr));
-
-        // function writeToFile(fileName, data) {
-        //     fs.writeFile(fileName, data, err => {
-        //         if (err) throw err
-        //     });
-            
-        // }  
-         
-    });
+        fs.writeFile("db/db.json", JSON.stringify(noteArray), (err) => {
+            if (err) throw err;
+            console.log("Saved")
+        });
+    })
 };
